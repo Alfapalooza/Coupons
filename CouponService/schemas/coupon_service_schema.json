@@ -1,0 +1,152 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "requirement": {
+      "description": "Requirement representation, always 2 decimals.",
+      "properties": {
+        "companyPrefix": {
+          "type": "string"
+        },
+        "familyCode": {
+          "type": "string"
+        },
+        "measurementUnit": {
+          "enum": [
+            "units",
+            "totalOffQualifyingItem",
+            "totalOffTransaction",
+            "lbs",
+            "kilograms"
+          ],
+          "type": "string"
+        },
+        "threshold": {
+          "type": "string"
+        }
+      },
+      "required": ["measurementUnit", "threshold", "companyPrefix", "familyCode"]
+    }
+  },
+  "properties": {
+    "allowMultipleOffers": {
+      "default": false,
+      "description": "Whether this coupon can be applied multiple times to this cart",
+      "type": "boolean"
+    },
+    "associateIntervention": {
+      "default": false,
+      "description": "Whether associate intervention is required",
+      "type": "boolean"
+    },
+    "couponProvider": {
+      "descripiton": "Coupon heading",
+      "type": "string"
+    },
+    "expiryDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "families": {
+      "description": "The company-family mapping to UPCs",
+      "patternProperties": {
+        "^\\d{6,12}-\\d{3}$": {
+          "properties": {
+            "upcs": {
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["id", "name"],
+                "type": "object"
+              },
+              "required": ["upcs"],
+              "type": "array"
+            }
+          }
+        }
+      },
+      "type": "object"
+    },
+    "databar": {
+      "description": "Stacked omnidirectional databar representation",
+      "type": "string"
+    },
+    "image": {
+      "description": "Thumbnail image url",
+      "type": "string"
+    },
+    "offerCode": {
+      "description": "A six-digit number assigned by the manufacturer to identify this specific offer.",
+      "type": "string"
+    },
+    "primaryRequirement": {
+      "$ref": "#/definitions/requirement"
+    },
+    "purchaseRule": {
+      "description": "Rule for combining requirements",
+      "enum": ["or_or", "and_and", "and_or", "meet_first_requirement"],
+      "type": "string"
+    },
+    "retailerPrefix": {
+      "description": "Identification of a specific retailer or retailer location where this coupon is to be accepted.",
+      "type": "string"
+    },
+    "save": {
+      "description": "Save representation, always 2 decimals.",
+      "properties": {
+        "measurmentUnit": {
+          "enum": ["cents", "centsOffBasket", "free", "percentage"],
+          "type": "string"
+        },
+        "amount": {
+          "description": "Dependent on measurement unit",
+          "type": "number"
+        },
+        "whichItem": {
+          "default": 1,
+          "minimum": 1,
+          "maximum": 3,
+          "type": "integer"
+        }
+      },
+      "required": ["amount", "measurementUnit", "whichItem"],
+      "type": "object"
+    },
+    "secondaryRequirement": {
+      "$ref": "#/definitions/requirement"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "serial": {
+      "description": "A number assigned by the manufacturer to identify a specific region or target consumer population.",
+      "type": "string"
+    },
+    "storeCoupon": {
+      "description": "Flags this offer as a Store Coupon",
+      "minimum": 1,
+      "maximum": 9,
+      "type": "integer"
+    },
+    "tertiaryRequirement": {
+      "$ref": "#/definitions/requirement"
+    }
+  },
+  "required": [
+    "allowMultipleOffers",
+    "couponProvider",
+    "families",
+    "databar",
+    "image",
+    "offerCode",
+    "primaryRequirement",
+    "save"
+  ],
+  "type": "object"
+}

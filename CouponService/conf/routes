@@ -1,0 +1,17 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Coupon
+# Get coupon data from GS1 DataBar data
+GET     /coupon/:id                                                 controllers.Coupons.getCoupon(id: String)
+
+## Family Codes
+# Family Code to UPCs
+# GET     /family/company/:companyPrefix/code/:familyCode             controllers.Coupons.getUPC(companyPrefix: String, familyCode: String)
+
+# Add Family Code w/ UPCs
+# POST    /family/company/:upc/add                                    controllers.Coupons.addUPC(upc: String)
+
+# Update Family Code w/ UPCs
+# PUT     /family/company/:upc/update                                 controller.Coupons.updateUPC(upc: String)
